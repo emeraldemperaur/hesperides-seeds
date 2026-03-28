@@ -1,0 +1,57 @@
+{
+  "name": "@emeraldemperaur/hesperides-seeds",
+  "version": "1.0.0",
+  "description": "Hesperidesᴬᴵ Utilities Package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emeraldemperaur/hesperides-seeds"
+  },
+  "license": "BSD-3-Clause",
+  "author": "ME",
+  "type": "module",
+  "main": "lib/index.cjs",
+  "module": "lib/index.esm.js",
+  "unpkg": "lib/index.umd.js",
+  "browser": "lib/index.esm.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "import": "./lib/index.esm.js",
+      "require": "./lib/index.cjs"
+    }
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build",
+    "release-package": "npm run build && npx changeset publish",
+    "test": "jest",
+    "test:fast": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "test:leaks": "jest --detectOpenHandles",
+    "test:changed": "jest --onlyChanged",
+    "test:bail": "jest --bail",
+    "test:ci": "jest --maxWorkers=50% --ci"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "@changesets/cli": "^2.30.0",
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.3.0",
+    "rollup": "^4.60.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-visualizer": "^7.0.1",
+    "sass-embedded": "^1.98.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

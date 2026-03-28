@@ -1,0 +1,58 @@
+name: Hesperidesᴬᴵ Seeds Release (Multijob)
+
+on:
+  push:
+    branches:
+      - prometheus
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  test:
+    name: Hesperidesᴬᴵ Seeds Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout Hesperidesᴬᴵ Seeds repository code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.HESPERIDES_CHANGESET_TOKEN }} 
+      - name: setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: install Hesperidesᴬᴵ Seeds dependencies
+        run: npm ci
+      - name: run jest
+        run: npm test -- --reporters=default --reporters=jest-junit          
+        env:
+          JEST_JUNIT_OUTPUT_FILE: "./junit.xml"
+
+  release:
+    name: Hesperidesᴬᴵ Seeds Release
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout Hesperidesᴬᴵ Seeds repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.HESPERIDES_CHANGESET_TOKEN }} 
+      - name: setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: install Hesperidesᴬᴵ Seeds dependencies
+        run: npm ci
+      - name: create Hesperidesᴬᴵ Seeds release pull request
+        id: changeset_action
+        uses: changesets/action@v1
+        with:
+          publish: npm run release-package
+        env:
+          GITHUB_TOKEN: ${{ secrets.HESPERIDES_CHANGESET_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_CHANGESET_TOKEN }}
