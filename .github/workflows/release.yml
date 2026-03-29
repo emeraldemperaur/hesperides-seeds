@@ -23,7 +23,7 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           cache: 'npm'
       - name: install Hesperidesᴬᴵ Seeds dependencies
         run: npm ci
@@ -45,7 +45,8 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
+          cache: 'npm'
       - name: install Hesperidesᴬᴵ Seeds dependencies
         run: npm ci
       - name: create Hesperidesᴬᴵ Seeds release pull request

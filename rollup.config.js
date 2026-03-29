@@ -37,8 +37,12 @@ export default [
             typescript({ useTsconfigDeclarationDir: true }),
             resolve(),
             commonjs(),
-            postcss({ extract: false, inject: true, minimize: true, use: [['sass', { implementation: sass, silenceDeprecations: ['legacy-js-api'] }]] }),
-            visualizer({ filename: 'vector-sigma-bundle-analysis.html', open: true }),
+            postcss({ 
+                extract: false, 
+                inject: true, 
+                minimize: true, 
+                use: [['sass', { implementation: sass, silenceDeprecations: ['legacy-js-api'] }]] }),
+            visualizer({ filename: 'hesperides-seeds-bundle-analysis.html', open: true }),
         ]
     },
     {
@@ -48,10 +52,14 @@ export default [
             format: "umd",
             name: "HesperidesSeeds",
             globals: {
-                
+                'zod': 'Zod',
+                'react': 'React',
+                'react-dom': 'ReactDOM',
+                'formik': 'Formik',
+                'yup': 'Yup'
             }
         },
-        external: makeExternalPredicate,
+        external: ['zod'],
         onwarn(warning, warn) {
             if (warning.code === 'CIRCULAR_DEPENDENCY' && warning.message.includes('node_modules')) return;
             if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return;
@@ -62,7 +70,11 @@ export default [
             typescript({ useTsconfigDeclarationDir: true }),
             resolve({ browser: true }), 
             commonjs(),
-            postcss({ extract: false, inject: true, minimize: true, use: [['sass', { implementation: sass, silenceDeprecations: ['legacy-js-api'] }]] }),
+            postcss({ 
+                extract: false, 
+                inject: true, 
+                minimize: true, 
+                use: [['sass', { implementation: sass, silenceDeprecations: ['legacy-js-api'] }]] }),
         ]
     }
 ];
