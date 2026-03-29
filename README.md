@@ -19,7 +19,7 @@ npm install @emeraldemperaur/hesperides-seeds
 
 ### Peer Dependencies
 ```bash
-npm install 
+npm install react react-dom
 ```
 
 ### Usage
